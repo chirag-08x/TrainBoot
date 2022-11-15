@@ -41,7 +41,7 @@ const Footer = () => {
           {socialLinks.map(({ icon, href }) => {
             return (
               <div key={uid()}>
-                <a href={href} target="_blank">
+                <a href={href} target="_blank" rel="noreferrer">
                   {icon}
                 </a>
               </div>
