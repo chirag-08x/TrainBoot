@@ -1,33 +1,35 @@
-import { navData } from "../../utils/data";
-import { v4 as uid } from "uuid";
-import { AiFillSetting } from "react-icons/ai";
 import styled from "styled-components";
+import { navLinks } from "../../utils/navbar";
+import { FaBars } from "react-icons/fa";
+import { useGlobalContext } from "../../context/AppContext";
 
 const Navbar = () => {
+  const { openModal } = useGlobalContext();
   return (
     <Wrapper>
       <section className="section-center">
-        <div className="nav-header">
-          <img src="images/navbar/logo.svg" alt="" />
-        </div>
-
-        <ul className="nav-links">
-          {navData.map(({ name, href }) => {
-            return (
-              <li key={uid()}>
-                <a href={href}>{name}</a>
-              </li>
-            );
-          })}
-        </ul>
-
-        <div className="nav-btns">
-          <button className="login-btn">login</button>
-          <button className="btn">register</button>
-          <button className="settings">
-            <AiFillSetting />
+        <div className="logo-container">
+          <figure className="logo">
+            <img src="images/Navbar/logo.svg" alt="" />
+          </figure>
+          <button className="toggle-sidebar" onClick={openModal}>
+            <FaBars />
           </button>
         </div>
+
+        <article className="nav-links">
+          <ul>
+            {navLinks.map(({ id, name, redirect }) => {
+              return (
+                <li key={id}>
+                  <a href={redirect}>{name}</a>
+                </li>
+              );
+            })}
+          </ul>
+
+          <button className="btn">sign up</button>
+        </article>
       </section>
     </Wrapper>
   );
@@ -37,40 +39,46 @@ export default Navbar;
 
 const Wrapper = styled.nav`
   background-color: var(--clr-primary1);
-  position: relative;
+  padding: 1rem 0;
 
-  .section-center {
+  .logo-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .toggle-sidebar {
+    color: white;
+    background: transparent;
     display: grid;
-    grid-template-columns: 5rem 2fr 1fr;
-    align-items: center;
+    place-items: center;
+    font-size: 1.8rem;
+    border: none;
+  }
 
-    .nav-links {
-      display: flex;
-      gap: 0 2rem;
-      justify-self: center;
+  .logo {
+    width: 200px;
+  }
 
-      a {
-        font-weight: 700;
-      }
+  .nav-links {
+    display: none;
+  }
+  @media screen and (min-width: 768px) {
+    .toggle-sidebar {
+      display: none;
     }
-
-    .nav-btns {
+    .section-center {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      gap: 0 2rem;
-      background: var(--clr-primary2);
-      height: 100%;
-      border-radius: 1rem;
 
-      .login-btn {
-        color: var(--clr-white);
-        font-weight: 700;
-      }
-
-      .settings {
-        color: white;
-        font-size: 1.5rem;
+      .nav-links {
+        display: flex;
+        gap: 0 2.5rem;
+        align-items: center;
+        ul {
+          display: flex;
+          gap: 0 1.5rem;
+        }
       }
     }
   }

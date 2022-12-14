@@ -1,14 +1,19 @@
-import { Home } from "./pages";
-import { Navbar, Footer } from "./components";
-import "./App.css";
+import { Home, Dashboard, Form } from "./pages";
+import { Navbar, Sidebar, Footer } from "./components";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <main>
+    <BrowserRouter>
       <Navbar />
-      <Home />
+      <Sidebar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Form />} />
+        <Route path="/home" element={<Dashboard />} />
+      </Routes>
       <Footer />
-    </main>
+    </BrowserRouter>
   );
 };
 
